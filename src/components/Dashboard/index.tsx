@@ -91,7 +91,7 @@ const MyFirstGrid = () => {
 
   return (
     <div>
-      <Button onClick={addCard}>Добавить карточку</Button>
+      <Button variant="contained" onClick={addCard}>Добавить карточку</Button>
       <GridLayout
         className={s.layout}
         layout={layout}
