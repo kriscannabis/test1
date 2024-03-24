@@ -81,7 +81,10 @@ const MyFirstGrid = () => {
   const onLayoutChange = (oplayout: any) => {
     setLayout(
       oplayout.map((opItem: any) => {
-        return layout.find((item) => opItem.i == item.i);
+        return {
+          ...layout.find((item) => opItem.i == item.i),
+          ...opItem
+        };
       })
     );
   };
