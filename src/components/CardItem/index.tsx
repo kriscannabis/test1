@@ -1,37 +1,45 @@
-import Card from "@mui/material/Card";
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import s from "./carditem.module.scss";
 import { Button, TextField, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import EditIcon from "@mui/icons-material/Edit";
-import { TextareaAutosize } from "@mui/base/TextareaAutosize";
+import { ItemType } from "../Dashboard";
 
 type CardItemType = {
-  item: {
-    i: number | string;
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-    title: string;
-    body: string;
-  };
+  item: ItemType;
   onRemoveItem: (i: any) => void;
+  saveHandler: (item: ItemType) => void;
 };
 
-const CardItem: React.FC<CardItemType> = ({ item, onRemoveItem }) => {
+const CardItem: React.FC<CardItemType> = ({
+  item,
+  onRemoveItem,
+  saveHandler,
+}) => {
   const [editMode, setEditMode] = useState(false);
+  const [titleValue, setTitleValue] = useState<string>(item.title);
+  const [textAreaValue, setTextAreaValue] = useState<string>(item.body);
 
-  const closeHandler = (e: any) => {
+  const closeHandler = () => {
     onRemoveItem(item.i);
   };
 
   const editBtnHandler = () => {
     setEditMode(!editMode);
+    if (editMode) {
+      console.log("save");
+      saveHandler({ ...item, title: titleValue, body: textAreaValue });
+    }
   };
 
-  
+  const titleOnChange = (e: any) => {
+    setTitleValue(e.target.value);
+  };
+
+  const textAreaOnChange = (e: any) => {
+    setTextAreaValue(e.target.value);
+  };
 
   return (
     <div className={s.item}>
@@ -40,10 +48,10 @@ const CardItem: React.FC<CardItemType> = ({ item, onRemoveItem }) => {
           <TextField
             onMouseDown={(e: any) => e.stopPropagation()}
             className={s.input}
-            // id="standard-basic"
+            onChange={titleOnChange}
             label="Заголовок"
             variant="standard"
-            value={item.title}
+            value={titleValue}
           />
         ) : (
           <Typography variant="h6">{item.title}</Typography>
@@ -59,23 +67,11 @@ const CardItem: React.FC<CardItemType> = ({ item, onRemoveItem }) => {
       <div className={s.body}>
         {editMode ? (
           <textarea
-          onMouseDown={(e: any) => e.stopPropagation()}
-          className={s.input}
-          value={item.body}
-          
-        />
-          // <TextField
-          //   className={s.input}
-          //   onMouseDown={(e: any) => e.stopPropagation()}
-          //   // id="standard-multiline-static"
-          //   label="Описание"
-          //   multiline
-          //   defaultValue="Default Value"
-          //   variant="standard"
-          //   value={item.body}
-          //   minRows={4}
-          //   maxRows={20}
-          // />
+            onMouseDown={(e: any) => e.stopPropagation()}
+            className={s.input}
+            value={textAreaValue}
+            onChange={textAreaOnChange}
+          />
         ) : (
           <Typography variant="body1">{item.body}</Typography>
         )}
@@ -105,10 +101,3 @@ const CardItem: React.FC<CardItemType> = ({ item, onRemoveItem }) => {
 };
 
 export default CardItem;
-function useEffect(arg0: () => void, arg1: never[]) {
-  throw new Error("Function not implemented.");
-}
-
-function useBeforeRender(arg0: () => void, arg1: never[]) {
-  throw new Error("Function not implemented.");
-}

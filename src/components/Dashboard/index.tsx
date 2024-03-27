@@ -1,15 +1,26 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import GridLayout, { Layout } from "react-grid-layout";
+import { useState } from "react";
+import GridLayout from "react-grid-layout";
 import Card from "@mui/material/Card";
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 import s from "./dashboard.module.scss";
-import { Button, Typography } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { Button } from "@mui/material";
 import CardItem from "../CardItem";
 
+export type ItemType = {
+  i: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  minW: number;
+  maxW: number;
+  title: string;
+  body: string;
+};
+
 const MyFirstGrid = () => {
-  const [layout, setLayout] = useState([
+  const [layout, setLayout] = useState<ItemType[]>([
     {
       i: "0",
       x: 0,
@@ -56,10 +67,13 @@ const MyFirstGrid = () => {
     },
   ]);
 
-  const onRemoveItem = (i: any) => {
-    console.log("removing", i);
+  const onRemoveItem = (i: string) => {
     setLayout(layout.filter((t) => t.i !== i));
   };
+
+  const saveHandler = (item:ItemType )=>{
+    setLayout([...layout.filter(card=>card.i != item.i), item])
+  }
 
   const addCard = () => {
     const catdId = layout.length.toString();
@@ -82,7 +96,7 @@ const MyFirstGrid = () => {
     setLayout(
       oplayout.map((opItem: any) => {
         return {
-          ...layout.find((item) => opItem.i == item.i),
+          ...layout.find((item) => opItem.i === item.i),
           ...opItem
         };
       })
@@ -106,7 +120,11 @@ const MyFirstGrid = () => {
             key={item.i}
             // onMouseDown={onDrop}
           >
-            <CardItem item={item} onRemoveItem={onRemoveItem} />
+            <CardItem 
+              item={item} 
+              saveHandler={saveHandler}
+              onRemoveItem={onRemoveItem} 
+            />
           </Card>
         ))}
       </GridLayout>
