@@ -28,7 +28,7 @@ const MyFirstGrid = () => {
       w: 2,
       h: 8,
       minW: 2,
-      maxW: 4,
+      maxW: 6,
       title: "Карточка 1",
       body: "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
     },
@@ -39,7 +39,7 @@ const MyFirstGrid = () => {
       w: 2,
       h: 8,
       minW: 2,
-      maxW: 4,
+      maxW: 6,
       title: "Заголовок",
       body: "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
     },
@@ -50,7 +50,7 @@ const MyFirstGrid = () => {
       w: 2,
       h: 8,
       minW: 2,
-      maxW: 4,
+      maxW: 6,
       title: "Тест",
       body: "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
     },
@@ -61,7 +61,7 @@ const MyFirstGrid = () => {
       w: 2,
       h: 8,
       minW: 2,
-      maxW: 4,
+      maxW: 6,
       title: "Тест 1",
       body: "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
     },
@@ -72,6 +72,7 @@ const MyFirstGrid = () => {
   };
 
   const saveHandler = (item:ItemType )=>{
+    console.log()
     setLayout([...layout.filter(card=>card.i != item.i), item])
   }
 
@@ -84,7 +85,7 @@ const MyFirstGrid = () => {
       w: 2,
       h: 8,
       minW: 2,
-      maxW: 4,
+      maxW: 6,
       title: `Карточка ${catdId}`,
       body: "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
     };
