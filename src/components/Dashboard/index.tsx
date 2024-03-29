@@ -119,7 +119,6 @@ const MyFirstGrid = () => {
           <Card
             className={s.item}
             key={item.i}
-            // onMouseDown={onDrop}
           >
             <CardItem 
               item={item} 
